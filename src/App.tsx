@@ -14,11 +14,22 @@ function App() {
         {id: v1(), title: "GraphQL", isDone: false}
     ])
     const [filter, setFilter] = useState<filterType>('all')
+    const [error, setError] = useState('')
     const deleteTask = (taskId: string) => {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
-    const addTask = (title:string)=>{
-        setTasks([...tasks, {id:v1(), title, isDone:false}])
+    const addTask = (title: string) => {
+        if (title.trim() !== '') {
+            setTasks([...tasks, {id: v1(), title, isDone: false}])
+            setError('')
+        }
+        if (title.trim() === ''){
+            setError('error')
+        }
+    }
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+
     }
 
 
@@ -39,6 +50,9 @@ function App() {
                       deleteTask={deleteTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+                      error={error}
+                      setError={setError}
             />
         </div>
     );
