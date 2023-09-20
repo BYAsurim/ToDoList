@@ -53,6 +53,7 @@ function App() {
                       changeTaskStatus={changeTaskStatus}
                       error={error}
                       setError={setError}
+                      filter={filter}
             />
         </div>
     );
