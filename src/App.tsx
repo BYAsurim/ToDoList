@@ -43,6 +43,8 @@ function App() {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
+
+
     // const [tasks, setTasks] = useState<Array<TasksType>>([
     //     {id: v1(), title: "HTML&CSS", isDone: true},
     //     {id: v1(), title: "JS", isDone: true},
@@ -51,13 +53,14 @@ function App() {
     //     {id: v1(), title: "GraphQL", isDone: false}
     // ])
     // const [filter, setFilter] = useState<filterType>('all')
-    const [error, setError] = useState('')
+    // const [error, setError] = useState('')
     const deleteTask = (todolistId: string, taskId: string) => {
         // setTasks(tasks.filter(t => t.id !== taskId))
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
 
     }
     const addTask = (todolistId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: [{id: v1(), title, isDone: false}, ...tasks[todolistId]]})
         // if (title.trim() !== '') {
         //     setTasks([...tasks, {id: v1(), title, isDone: false}])
         //     setError('')
@@ -65,18 +68,14 @@ function App() {
         // if (title.trim() === '') {
         //     setError('error')
         // }
-        if (title.trim() !== '') {
-            setTasks({...tasks, [todolistId]: [{id: v1(), title, isDone: false}, ...tasks[todolistId]]})
-            setError('')
-        }
-        if (title.trim() === '') {
-            setError('error')
-        }
     }
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
-
+    }
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]:[...tasks[todolistId].map(el=> el.id === taskId ?
+                {...el, title}: el)]})
     }
     const removeTodoList = (todolistId: string) => {
         setTodolists(todolists.filter(tl => tl.id !== todolistId))
@@ -86,10 +85,14 @@ function App() {
     const addTodoList = (newTitle: string) => {
         let newTodoLIstId = v1()
         let newTodo: TodolistsType = {id: newTodoLIstId, title: newTitle, filter: 'all'}
-        if (newTitle.trim() !== '') {
-            setTodolists([...todolists, newTodo])
-            setTasks({...tasks, [newTodoLIstId]: []})
-        }
+        setTodolists([...todolists, newTodo])
+        setTasks({...tasks, [newTodoLIstId]: []})
+        // if (newTitle.trim() !== '') {
+        //
+        // }
+    }
+    const changeTodoListTitle = (todolistId: string, title: string) => {
+       setTodolists(todolists.map(el=> el.id === todolistId ? {...el, title}: el))
     }
 
     //
@@ -132,8 +135,10 @@ function App() {
                         changeFilter={changeFilter}
                         addTask={addTask}
                         changeTaskStatus={changeTaskStatus}
-                        error={error}
-                        setError={setError}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTodoListTitle={changeTodoListTitle}
+                        // error={error}
+                        // setError={setError}
                         filter={todolist.filter}
                         removeTodoList={removeTodoList}
                     />

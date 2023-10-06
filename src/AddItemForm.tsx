@@ -20,15 +20,17 @@ const AddItemForm  = (props:AddItemFormPropsType) => {
         if(newTaskTitle.trim() !== ''){
         props.addTaskHandler(newTaskTitle)
         setNewTastTitle('')
-            setError('')
         }else {
             setError('error')
         }
     }
     const onKeyPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(error !== ''){
+            setError('')
+        }
+
         if (e.charCode === 13) {
-            props.addTaskHandler(newTaskTitle)
-            setNewTastTitle('')
+           addTaskHandler()
         }
     }
 
