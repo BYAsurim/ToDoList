@@ -1,12 +1,12 @@
-.error{
-  color: red;
-}
-.errorInput{
-  border: 1px solid red;
-}
-.errorInput:focus{
-  outline: red;
-}
+/*.error{*/
+/*  color: red;*/
+/*}*/
+/*.errorInput{*/
+/*  border: 1px solid red;*/
+/*}*/
+/*.errorInput:focus{*/
+/*  outline: red;*/
+/*}*/
 .activeFilter{
   background-color: aquamarine;
 }
@@ -18,5 +18,5 @@
 }
 .todoTitle button{
   height: 20px;
-  margin-top: 5px;
+  margin-top: 20px;
 }

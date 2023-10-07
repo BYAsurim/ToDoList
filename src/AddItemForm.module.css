@@ -1,0 +1,18 @@
+.error{
+    color: red;
+}
+.errorInput{
+     border: 1px solid red;
+ }
+.errorInput:focus{
+    outline: red;
+}
+.button{
+    width: 20px;
+    height: 20px;
+    /*maxHeight: '30px';*/
+    /*minHeight: '30px'*/
+}
+.input{
+
+}

@@ -1,12 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import s from "./Todolist.module.css";
+import s from "./AddItemForm.module.css";
+import {Button, TextField} from "@mui/material";
 
 type AddItemFormPropsType = {
-    addTaskHandler: (newTaskTitle:string)=> void
+    addTaskHandler: (newTaskTitle: string) => void
 
 }
 
-const AddItemForm  = (props:AddItemFormPropsType) => {
+const AddItemForm = (props: AddItemFormPropsType) => {
 
     const [newTaskTitle, setNewTastTitle] = useState('')
     const [error, setError] = useState('')
@@ -17,31 +18,39 @@ const AddItemForm  = (props:AddItemFormPropsType) => {
         }
     }
     const addTaskHandler = () => {
-        if(newTaskTitle.trim() !== ''){
-        props.addTaskHandler(newTaskTitle)
-        setNewTastTitle('')
-        }else {
+        if (newTaskTitle.trim() !== '') {
+            props.addTaskHandler(newTaskTitle)
+            setNewTastTitle('')
+        } else {
             setError('error')
         }
     }
     const onKeyPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-        if(error !== ''){
+        if (error !== '') {
             setError('')
         }
 
         if (e.charCode === 13) {
-           addTaskHandler()
+            addTaskHandler()
         }
     }
 
     return (
         <div>
             <div>
-                <input value={newTaskTitle} onChange={onChangeHandler}
-                       onKeyPress={onKeyPressEnter}
-                       className={error ? s.errorInput : ''}
+                {/*<input value={newTaskTitle} onChange={onChangeHandler}*/}
+                {/*       onKeyPress={onKeyPressEnter}*/}
+                {/*       className={error ? s.errorInput : ''}*/}
+                {/*/>*/}
+                <TextField
+                    variant={'outlined'}
+                    value={newTaskTitle} onChange={onChangeHandler}
+                    onKeyPress={onKeyPressEnter}
+                    error={!!error}
+
                 />
-                <button onClick={addTaskHandler}>+</button>
+                {/*<button onClick={addTaskHandler}>+</button>*/}
+                <Button className={s.button} variant={"contained"} color={'primary'} onClick={addTaskHandler}>+</Button>
                 {error &&
                     <div className={s.error}>error</div>
                 }
