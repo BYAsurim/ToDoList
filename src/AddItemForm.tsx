@@ -1,12 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from "./AddItemForm.module.css";
-import {Button, TextField} from "@mui/material";
+import {IconButton, TextField} from "@mui/material";
+import {AddBox} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
     addTaskHandler: (newTaskTitle: string) => void
-
 }
-
 const AddItemForm = (props: AddItemFormPropsType) => {
 
     const [newTaskTitle, setNewTastTitle] = useState('')
@@ -46,15 +45,19 @@ const AddItemForm = (props: AddItemFormPropsType) => {
                     variant={'outlined'}
                     value={newTaskTitle} onChange={onChangeHandler}
                     onKeyPress={onKeyPressEnter}
+                    label={'Write title'}
                     error={!!error}
-
                 />
                 {/*<button onClick={addTaskHandler}>+</button>*/}
-                <Button className={s.button} variant={"contained"} color={'primary'} onClick={addTaskHandler}>+</Button>
-                {error &&
-                    <div className={s.error}>error</div>
-                }
-
+                {/*<Button className={s.button} variant={"contained"} color={'primary'} onClick={addTaskHandler}>+</Button>*/}
+                <IconButton
+                    onClick={addTaskHandler}
+                    color={'primary'}>
+                    <AddBox/>
+                </IconButton>
+                {/*{error &&*/}
+                {/*    <div className={s.error}>error</div>*/}
+                {/*}*/}
             </div>
         </div>
     );

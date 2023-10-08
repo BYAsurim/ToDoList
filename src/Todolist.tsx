@@ -86,7 +86,7 @@ export const Todolist = (props: PropsType) => {
                     {/*}*/}
 
                 </div>
-                <ul>
+                <div>
                     {
 
                         props.tasks.map((t) => {
@@ -97,8 +97,7 @@ export const Todolist = (props: PropsType) => {
                                 const newStatus = e.currentTarget.checked
                                 props.changeTaskStatus(props.id, t.id, newStatus)
                             }
-                            
-                            return (<li key={t.id} className={t.isDone ? s.isDone : ''}>
+                            return (<div key={t.id} className={t.isDone ? s.isDone : ''}>
                                 {/*<input type="checkbox"*/}
                                 {/*       checked={t.isDone}*/}
                                 {/*       onChange={changeTaskStatusHandler}*/}
@@ -117,10 +116,10 @@ export const Todolist = (props: PropsType) => {
                                 <IconButton onClick={deleteTasksClickHandler}>
                                     <Delete/>
                                 </IconButton>
-                            </li>)
+                            </div>)
                         })
                     }
-                </ul>
+                </div>
                 <div>
                     {/*<button onClick={allClickHandler} className={props.filter === 'all' ? s.activeFilter : ''}>All</button>*/}
                     {/*<button onClick={activeClickHandler} className={props.filter === 'active' ? s.activeFilter  : ''}>Active</button>*/}
