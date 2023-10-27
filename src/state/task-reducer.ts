@@ -1,9 +1,12 @@
 import {StateTasksType} from "../App";
+import {AddTodoListAC, RemoveTodoListAC} from "./todolists-reducer";
 
 type ActionType = ReturnType<typeof removeTaskAC> |
     ReturnType<typeof addTaskAC> |
-    ReturnType<typeof changeTaskStatusAC>|
-    ReturnType<typeof changeTaskTitleAC>
+    ReturnType<typeof changeTaskStatusAC> |
+    ReturnType<typeof changeTaskTitleAC> |
+    ReturnType<typeof AddTodoListAC>|
+    ReturnType<typeof RemoveTodoListAC>
 
 
 export const removeTaskAC = (taskId: string, todoId: string) => {
@@ -28,7 +31,7 @@ export const changeTaskStatusAC = (taskId: string, isDone: boolean, todoId: stri
         isDone
     } as const
 }
-export const changeTaskTitleAC = (title: string, todoId: string, taskId:string) => {
+export const changeTaskTitleAC = (title: string, todoId: string, taskId: string) => {
     return {
         type: 'CHANGE-TASK-TITLE',
         todoId,
@@ -53,11 +56,20 @@ export const taskReducer = (state: StateTasksType, action: ActionType): StateTas
                         : t)
             }
         case 'CHANGE-TASK-TITLE':
-            return {...state, [action.todoId]:
-                    state[action.todoId].map(t=> t.id === action.taskId
-                        ? {...t, title:action.title}
-                        : t)}
-
+            return {
+                ...state, [action.todoId]:
+                    state[action.todoId].map(t => t.id === action.taskId
+                        ? {...t, title: action.title}
+                        : t)
+            }
+        case 'ADD-TODOLIST':
+            return {
+                ...state, [action.todolistId]: []
+            }
+        case 'REMOVE-TODOLIST':
+            let stateCopy = state
+            delete stateCopy[action.id]
+            return stateCopy
 
         default:
             throw new Error('I don\'t understand this type')
