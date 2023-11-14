@@ -10,8 +10,6 @@ type PropsType = {
     id: string
     title: string
     tasks: Array<TasksType>
-    // error: string
-    // setError: (error: string) => void
     deleteTask: (todolistId: string, taskId: string) => void
     changeFilter: (value: filterType, todolistId: string) => void
     addTask: (todolistId: string, title: string) => void
@@ -89,7 +87,7 @@ export const Todolist = (props: PropsType) => {
                 <div>
                     {
 
-                        props.tasks.map((t) => {
+                        props.tasks?.map((t) => {
                             const deleteTasksClickHandler = () => {
                                 props.deleteTask(props.id, t.id)
                             }
@@ -97,26 +95,22 @@ export const Todolist = (props: PropsType) => {
                                 const newStatus = e.currentTarget.checked
                                 props.changeTaskStatus(props.id, t.id, newStatus)
                             }
-                            return (<div key={t.id} className={t.isDone ? s.isDone : ''}>
-                                {/*<input type="checkbox"*/}
-                                {/*       checked={t.isDone}*/}
-                                {/*       onChange={changeTaskStatusHandler}*/}
-                                {/*/>*/}
-                                <Checkbox
-                                    color={'primary'}
-                                    checked={t.isDone}
-                                    onChange={changeTaskStatusHandler}
-                                />
 
-                                {/*<span>{t.title}</span>*/}
-                                <EditableSpan title={t.title} onClick={(title: string) => {
-                                    changeTaskTitleHandler(t.id, title)
-                                }}/>
-                                {/*<button onClick={deleteTasksClickHandler}>X</button>*/}
-                                <IconButton onClick={deleteTasksClickHandler}>
-                                    <Delete/>
-                                </IconButton>
-                            </div>)
+                            return (
+                                <div key={t.id} className={t.isDone ? s.isDone : ''}>
+
+                                    <Checkbox
+                                        color={'primary'}
+                                        checked={t.isDone}
+                                        onChange={changeTaskStatusHandler}
+                                    />
+                                    <EditableSpan title={t.title} onClick={(title: string) => {
+                                        changeTaskTitleHandler(t.id, title)
+                                    }}/>
+                                    <IconButton onClick={deleteTasksClickHandler}>
+                                        <Delete/>
+                                    </IconButton>
+                                </div>)
                         })
                     }
                 </div>
