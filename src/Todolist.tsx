@@ -87,7 +87,7 @@ export const Todolist = (props: PropsType) => {
                 <div>
                     {
 
-                        props.tasks?.map((t) => {
+                        props.tasks.map((t) => {
                             const deleteTasksClickHandler = () => {
                                 props.deleteTask(props.id, t.id)
                             }
@@ -98,7 +98,6 @@ export const Todolist = (props: PropsType) => {
 
                             return (
                                 <div key={t.id} className={t.isDone ? s.isDone : ''}>
-
                                     <Checkbox
                                         color={'primary'}
                                         checked={t.isDone}

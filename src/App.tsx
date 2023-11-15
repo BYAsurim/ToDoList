@@ -137,10 +137,9 @@ function App() {
                                     setTodolists([...todolists])
                                 }
                             }
-                            return <Grid item>
+                            return <Grid item key={todolist.id}>
                                 <Paper style={{padding:'10px'}}>
                                 <Todolist
-                                    key={todolist.id}
                                     id={todolist.id}
                                     title={todolist.title}
                                     tasks={filteredTasks}
