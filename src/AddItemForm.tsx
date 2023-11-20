@@ -1,12 +1,12 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import s from "./AddItemForm.module.css";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {IconButton, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
     addTaskHandler: (newTaskTitle: string) => void
 }
-const AddItemForm = (props: AddItemFormPropsType) => {
+const AddItemForm = memo((props: AddItemFormPropsType) => {
+    console.log('AddItemForm')
 
     const [newTaskTitle, setNewTastTitle] = useState('')
     const [error, setError] = useState('')
@@ -61,6 +61,6 @@ const AddItemForm = (props: AddItemFormPropsType) => {
             </div>
         </div>
     );
-};
+})
 
 export default AddItemForm;

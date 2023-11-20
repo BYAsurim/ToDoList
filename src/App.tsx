@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -87,15 +87,13 @@ function App() {
         delete tasks[todolistId]
         setTasks({...tasks})
     }
-    const addTodoList = (newTitle: string) => {
+    const addTodoList = useCallback ((newTitle: string) => {
         let newTodoLIstId = v1()
         let newTodo: TodolistsType = {id: newTodoLIstId, title: newTitle, filter: 'all'}
         setTodolists([...todolists, newTodo])
         setTasks({...tasks, [newTodoLIstId]: []})
-        // if (newTitle.trim() !== '') {
-        //
-        // }
-    }
+
+    }, [])
     const changeTodoListTitle = (todolistId: string, title: string) => {
         setTodolists(todolists.map(el => el.id === todolistId ? {...el, title} : el))
     }
@@ -140,8 +138,9 @@ function App() {
                             return <Grid item key={todolist.id}>
                                 <Paper style={{padding:'10px'}}>
                                 <Todolist
-                                    id={todolist.id}
-                                    title={todolist.title}
+                                    // id={todolist.id}
+                                    // title={todolist.title}
+                                    todolist={todolist}
                                     tasks={filteredTasks}
                                     deleteTask={deleteTask}
                                     changeFilter={changeFilter}

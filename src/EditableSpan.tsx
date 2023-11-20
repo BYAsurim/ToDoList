@@ -7,13 +7,14 @@ type EditableSpanPropsType = {
 }
 
 export const EditableSpan = (props: EditableSpanPropsType) => {
-    const [newTaskTitle, setNewTastTitle] = useState(props.title)
+    console.log('EditableSpan')
+    const [newTaskTitle, setNewTaskTitle] = useState(props.title)
     const [edit, setEdit] = useState(false)
     const activateEditMode = () => {
         setEdit(true)
     }
     const NewTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTastTitle(e.currentTarget.value)
+        setNewTaskTitle(e.currentTarget.value)
     }
     const activateViewMode = () => {
         props.onClick(newTaskTitle)

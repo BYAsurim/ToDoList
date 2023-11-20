@@ -147,8 +147,9 @@ export function AppWithReduser() {
                             return <Grid item key={todolist.id}>
                                 <Paper style={{padding: '10px'}}>
                                     <Todolist
-                                        id={todolist.id}
-                                        title={todolist.title}
+                                        // id={todolist.id}
+                                        // title={todolist.title}
+                                        todolist={todolist}
                                         tasks={filteredTasks}
                                         deleteTask={deleteTask}
                                         changeFilter={changeFilter}
