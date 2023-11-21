@@ -159,7 +159,7 @@ export function AppWithReduser() {
                                         changeTodoListTitle={changeTodoListTitle}
                                         // error={error}
                                         // setError={setError}
-                                        filter={todolist.filter}
+                                        // filter={todolist.filter}
                                         removeTodoList={removeTodoList}
                                     />
                                 </Paper>
