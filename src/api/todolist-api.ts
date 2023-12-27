@@ -13,25 +13,57 @@ export const todolistAPI = {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     addTodolist(title: string) {
-        return instance.post<ResponseTodolistType<{ item: TodolistType }>>('todo-lists', {title})
+        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
     },
     removeTodolist(id: string) {
-        return instance.delete<ResponseTodolistType<{}>>(`todo-lists/${id}`)
+        return instance.delete<ResponseType>(`todo-lists/${id}`)
     },
     upDateTodolistTitle(id: string, title: string) {
-        return instance.put<ResponseTodolistType<{}>>(`todo-lists/${id}`, {title})
+        return instance.put<ResponseType>(`todo-lists/${id}`, {title})
+    }
+}
+export const tasksAPI = {
+    getTasks(todolistId: string) {
+        return instance.get<ResponseTasksType>(`todo-lists/${todolistId}/tasks`)
+    },
+    addTasks(todolistId: string, title: string) {
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
+    },
+    removeTask(todolistId: string, taskId: string) {
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    upDateTaskTitle(todolistId: string, taskId: string, title: string) {
+        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
     }
 }
 
 export type TodolistType = {
     id: string,
     title: string,
-    addedDate: string,
+    addedDate: Date,
     order: number
 }
-export type ResponseTodolistType<D> = {
+export type ResponseType<D = {}> = {
     data: D,
     messages: Array<string>,
     fieldsErrors: Array<string>,
     resultCode: number
+}
+export  type ResponseTasksType = {
+    items: Array<TaskType>,
+    totalCount: number,
+    error: string | null
+
+}
+export type TaskType = {
+    id: string,
+    title: string,
+    description: null,
+    todoListId: string,
+    order: number,
+    status: number,
+    priority: number,
+    startDate: null,
+    deadline: null,
+    addedDate: Date
 }
