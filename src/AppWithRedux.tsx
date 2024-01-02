@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import AddItemForm from "./AddItemForm";
@@ -8,11 +8,12 @@ import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
+    fetchTodolists,
     RemoveTodoListAC
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/task-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispach} from "./state/store";
 
 
 export type filterType = 'all' | 'active' | 'completed'
@@ -32,10 +33,13 @@ export type StateTasksType = {
 
 
 export function AppWithRedux() {
+    useEffect(() => {
+        dispatch(fetchTodolists())
+    }, [])
 
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, StateTasksType>(state => state.tasks)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispach()
 
     const deleteTask = useCallback((todolistId: string, taskId: string) => {
         dispatch(removeTaskAC(taskId, todolistId))
@@ -60,9 +64,9 @@ export function AppWithRedux() {
         // setTodolists(todolists.map(el => el.id === todolistId ? {...el, title} : el))
         dispatch(ChangeTodoListTitleAC(todolistId, title))
     }, [dispatch])
-    const changeFilter = useCallback( (value: filterType, todolistId: string) => {
+    const changeFilter = useCallback((value: filterType, todolistId: string) => {
         dispatch(ChangeTodoListFilterAC(todolistId, value))
-    },[dispatch])
+    }, [dispatch])
     return (
         <div className="App">
             <BasicAppBar/>
