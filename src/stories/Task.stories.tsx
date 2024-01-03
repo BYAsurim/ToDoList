@@ -16,7 +16,19 @@ const meta: Meta<typeof Task> = {
         changeTaskStatus: action('Status changed inside Task'),
         changeTaskTitle: action('Title changed inside Task'),
         deleteTask: action('Remove Button clicked changed inside Task'),
-        task: {id: '12wsdewfijdei', title: 'JS', isDone: false},
+        task: {
+            id: '1',
+            title: 'CSS',
+            addedDate: new Date(),
+            order: 0,
+            deadline: null,
+            todoListId: 'todolistId1',
+            description: null,
+            priority: 1,
+            status: 1,
+            startDate: null
+
+        },
         todolistId: 'fgdosrg8rgjuh'
     }
 };
@@ -31,6 +43,18 @@ export const TaskIsNotDoneStory: Story = {};
 export const TaskIsDoneStory: Story = {
     // More on args: https://storybook.js.org/docs/react/writing-stories/args
     args: {
-        task: {id: '12wsdewfijdei2343', title: 'CSS', isDone: true},
+        task: {
+            id: '1',
+            title: 'CSS',
+            addedDate: new Date(),
+            order: 0,
+            deadline: null,
+            todoListId: 'todolistId1',
+            description: null,
+            priority: 1,
+            status: 1,
+            startDate: null
+
+        },
     },
 };

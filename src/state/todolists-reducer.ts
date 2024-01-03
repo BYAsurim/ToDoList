@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {filterType} from "../AppWithRedux";
+import {filterType} from "../App";
 import {todolistAPI, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 
@@ -20,7 +20,6 @@ const initialState: TodolistDomainType[] = [];
 export const todolistsReducer = (state = initialState, action: ActionType): TodolistDomainType[] => {
     switch (action.type) {
         case 'SET-TODOLISTS':
-            debugger
             return action.todolists.map(tl => ({
                 ...tl, filter: "all"
             }))

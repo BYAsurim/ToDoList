@@ -1,6 +1,6 @@
-import {StateTasksType} from "../App";
 import {AddTodoListAC, RemoveTodoListAC, TodolistDomainType, todolistsReducer} from "./todolists-reducer";
 import {taskReducer} from "./task-reducer";
+import {StateTasksType} from "../App";
 
 test('ids should be equals', () => {
     const startTasksState: StateTasksType = {}
@@ -21,14 +21,60 @@ test('ids should be equals', () => {
 test('property with todolistId should be deleted', () => {
     const startState: StateTasksType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
-            {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false}
+            {
+                id: '1',
+                title: 'CSS',
+                addedDate: new Date(),
+                order: 0,
+                deadline: null,
+                todoListId: 'todolistId1',
+                description: null,
+                priority: 1,
+                status: 1,
+                startDate: null
+
+            },
+            {
+                id: '1',
+                title: 'JS',
+                addedDate: new Date(),
+                order: 0,
+                deadline: null,
+                todoListId: 'todolistId1',
+                description: null,
+                priority: 1,
+                status: 1,
+                startDate: null
+
+            }
         ],
         'todolistId2': [
-            {id: '1', title: 'bread', isDone: false},
-            {id: '2', title: 'milk', isDone: true},
-            {id: '3', title: 'tea', isDone: false}
+            {
+                id: '1',
+                title: 'bread',
+                addedDate: new Date(),
+                order: 0,
+                deadline: null,
+                todoListId: 'todolistId1',
+                description: null,
+                priority: 1,
+                status: 1,
+                startDate: null
+
+            },
+            {
+                id: '1',
+                title: 'milk',
+                addedDate: new Date(),
+                order: 0,
+                deadline: null,
+                todoListId: 'todolistId1',
+                description: null,
+                priority: 1,
+                status: 1,
+                startDate: null
+
+            }
         ]
     }
 

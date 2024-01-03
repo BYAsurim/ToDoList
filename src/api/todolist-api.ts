@@ -27,13 +27,13 @@ export const tasksAPI = {
         return instance.get<ResponseTasksType>(`todo-lists/${todolistId}/tasks`)
     },
     addTasks(todolistId: string, title: string) {
-        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<ResponseType<{ item: TasksType }>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     removeTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     upDateTaskTitle(todolistId: string, taskId: string, title: string) {
-        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
+        return instance.put<ResponseType<{ item: TasksType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
     }
 }
 
@@ -50,12 +50,12 @@ export type ResponseType<D = {}> = {
     resultCode: number
 }
 export  type ResponseTasksType = {
-    items: Array<TaskType>,
+    items: Array<TasksType>,
     totalCount: number,
     error: string | null
 
 }
-export type TaskType = {
+export type TasksType = {
     id: string,
     title: string,
     description: null,
@@ -66,4 +66,10 @@ export type TaskType = {
     startDate: null,
     deadline: null,
     addedDate: Date
+}
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
 }

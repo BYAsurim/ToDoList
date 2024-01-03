@@ -3,10 +3,11 @@ import s from "./Todolist.module.css";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TasksType} from "./App";
+import {TaskStatuses, TasksType} from "./api/todolist-api";
+
 
 type TaskPropsType = {
-    task:TasksType
+    task: TasksType
     deleteTask: (todolistId: string, taskId: string) => void
     todolistId: string
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
@@ -14,11 +15,11 @@ type TaskPropsType = {
 }
 
 export const Task: React.FC<TaskPropsType> = ({
-    task,
-    deleteTask,
-    todolistId,
-    changeTaskStatus,
-    changeTaskTitle
+                                                  task,
+                                                  deleteTask,
+                                                  todolistId,
+                                                  changeTaskStatus,
+                                                  changeTaskTitle
                                               }) => {
 
     const deleteTasksClickHandler = () => {
@@ -26,17 +27,17 @@ export const Task: React.FC<TaskPropsType> = ({
     }
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatus = e.currentTarget.checked
-       changeTaskStatus(todolistId, task.id, newStatus)
+        changeTaskStatus(todolistId, task.id, newStatus)
     }
-    const changeTaskTitleHandler =  useCallback ((title: string) => {
+    const changeTaskTitleHandler = useCallback((title: string) => {
         changeTaskTitle(todolistId, task.id, title)
-    },[todolistId, changeTaskTitle, task.id])
+    }, [todolistId, changeTaskTitle, task.id])
 
     return (
-        <div className={task.isDone ? s.isDone : ''}>
+        <div className={task.status ? s.isDone : ''}>
             <Checkbox
                 color={'primary'}
-                checked={task.isDone}
+                checked={task.status === TaskStatuses.Completed}
                 onChange={changeTaskStatusHandler}
             />
             <EditableSpan title={task.title} onClick={changeTaskTitleHandler}/>
