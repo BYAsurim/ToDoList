@@ -10,7 +10,6 @@ import {v1} from 'uuid'
 import {filterType} from "../App";
 
 
-
 let todolistId1: string;
 let todolistId2: string;
 let startState: TodolistDomainType[]
@@ -19,8 +18,8 @@ beforeEach(() => {
     todolistId2 = v1()
 
     startState = [
-        {id: todolistId1, title: 'What to learn', filter: 'all',order:0, addedDate: new Date()},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order:0, addedDate: new Date() }
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: new Date()},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: new Date()}
     ]
 })
 
@@ -33,12 +32,18 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    let newTodolistTitle = 'New Todolist'
+    const newTodoList = {
+        id: 'todolistId3',
+        title: 'title',
+        filter: 'all',
+        order: 0,
+        addedDate: new Date()
+    }
 
-    const endState = todolistsReducer(startState, AddTodoListAC(newTodolistTitle))
+    const endState = todolistsReducer(startState, AddTodoListAC(newTodoList))
 
     expect(endState.length).toBe(3)
-    expect(endState[2].title).toBe(newTodolistTitle)
+    expect(endState[2].title).toBe('title')
 })
 test('correct todolist should change its name', () => {
 

@@ -1,59 +1,63 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from './task-reducer'
+import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from './task-reducer'
 import {AddTodoListAC} from './todolists-reducer'
 import {StateTasksType} from "../App";
 
 
 let startState: StateTasksType;
-beforeEach(()=>{
-     startState = {
+beforeEach(() => {
+    startState = {
         'todolistId1': [
-            {id: '1',
+            {
+                id: '1',
                 title: 'CSS',
-                addedDate:new Date(),
+                addedDate: new Date(),
                 order: 0,
                 deadline: null,
                 todoListId: 'todolistId1',
                 description: null,
                 priority: 1,
-                status:1,
+                status: 1,
                 startDate: null
 
             },
-            {id: '1',
+            {
+                id: '2',
                 title: 'JS',
-                addedDate:new Date(),
+                addedDate: new Date(),
                 order: 0,
                 deadline: null,
                 todoListId: 'todolistId1',
                 description: null,
                 priority: 1,
-                status:1,
+                status: 1,
                 startDate: null
 
             }
         ],
         'todolistId2': [
-            {id: '1',
+            {
+                id: '1',
                 title: 'bread',
-                addedDate:new Date(),
+                addedDate: new Date(),
                 order: 0,
                 deadline: null,
                 todoListId: 'todolistId1',
                 description: null,
                 priority: 1,
-                status:1,
+                status: 1,
                 startDate: null
 
             },
-            {id: '1',
+            {
+                id: '2',
                 title: 'milk',
-                addedDate:new Date(),
+                addedDate: new Date(),
                 order: 0,
                 deadline: null,
                 todoListId: 'todolistId1',
                 description: null,
                 priority: 1,
-                status:1,
+                status: 1,
                 startDate: null
 
             }
@@ -63,7 +67,7 @@ beforeEach(()=>{
 
 test('correct task should be deleted from correct array', () => {
 
-      const action = removeTaskAC('2', 'todolistId2')
+    const action = removeTaskAC('2', 'todolistId2')
 
     const endState = taskReducer(startState, action)
 
@@ -82,15 +86,16 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const action = addTaskAC({id: '1',
+    const action = addTaskAC({
+        id: '1',
         title: 'juce',
-        addedDate:new Date(),
+        addedDate: new Date(),
         order: 0,
         deadline: null,
         todoListId: 'todolistId1',
         description: null,
         priority: 1,
-        status:1,
+        status: 1,
         startDate: null
 
     })
@@ -104,29 +109,39 @@ test('correct task should be added to correct array', () => {
 
 })
 test('status of specified task should be changed', () => {
+    const modelTask = {
+        id: '2',
+        title: 'milk',
+        addedDate: new Date(),
+        order: 0,
+        deadline: null,
+        todoListId: 'todolistId2',
+        description: null,
+        priority: 1,
+        status: 1,
+        startDate: null
 
-    const action = changeTaskStatusAC('2', false, 'todolistId2')
+    }
+
+    const action = updateTaskAC('todolistId2', '2', modelTask)
 
     const endState = taskReducer(startState, action)
 
     expect(endState['todolistId2'][1].title).toBe('milk')
     expect(endState['todolistId2'].length).toBe(3)
 })
-test('title of specified task should be changed', () => {
-
-    const action = changeTaskTitleAC('Style component', 'todolistId1', '1')
-
-    const endState = taskReducer(startState, action)
-    expect(endState['todolistId2'][0].title).toBe('bread')
-    expect(endState['todolistId1'][0].title).toBe('Style component')
-    expect(endState['todolistId1'].length).toBe(3)
-})
 
 
 test('new array should be added when new todolist is added', () => {
+    const newTodoList = {
+        id: 'todolistId3',
+        title: 'title',
+        filter: 'all',
+        order: 0,
+        addedDate: new Date()
+    }
 
-
-    const action = AddTodoListAC('new todolist')
+    const action = AddTodoListAC(newTodoList)
 
     const endState = taskReducer(startState, action)
 
