@@ -10,7 +10,7 @@ type TaskPropsType = {
     task: TasksType
     deleteTask: (todolistId: string, taskId: string) => void
     todolistId: string
-    changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
     changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
 }
 
@@ -27,7 +27,7 @@ export const Task: React.FC<TaskPropsType> = ({
     }
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatus = e.currentTarget.checked
-        changeTaskStatus(todolistId, task.id, newStatus)
+        changeTaskStatus(todolistId, task.id, newStatus ? TaskStatuses.Completed : TaskStatuses.New)
     }
     const changeTaskTitleHandler = useCallback((title: string) => {
         changeTaskTitle(todolistId, task.id, title)

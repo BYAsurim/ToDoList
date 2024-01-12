@@ -164,34 +164,34 @@ export const DeleteTask = () => {
     </>
 }
 
-export const UpdateTaskTitle = () => {
-    const [state, setState] = useState<any>(null)
-    const [todoId, setTodoId] = useState<string>('')
-    const [taskId, setTaskId] = useState<string>('')
-    const [title, setTitle] = useState<string>('')
-
-    const handleTodoIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTodoId(e.currentTarget.value)
-    }
-    const handleTaskIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTaskId(e.currentTarget.value)
-    }
-    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-    const updateTaskHandler = async () => {
-        const res = await tasksAPI.upDateTaskTitle(todoId, taskId, title)
-        setState(res.data)
-        setTodoId('')
-        setTaskId('')
-        setTitle('')
-    }
-
-    return <>
-        <input onChange={handleTodoIdChange} style={{marginRight: '10px'}} value={todoId} placeholder={'todoId'}/>
-        <input onChange={handleTaskIdChange} style={{marginRight: '10px'}} value={taskId} placeholder={'taskId'}/>
-        <input onChange={handleTitleChange} style={{marginRight: '10px'}} value={title} placeholder={'task title'}/>
-        <button onClick={updateTaskHandler}>update task</button>
-        <div>{JSON.stringify(state)}</div>
-    </>
-}
+// export const UpdateTaskTitle = () => {
+//     const [state, setState] = useState<any>(null)
+//     const [todoId, setTodoId] = useState<string>('')
+//     const [taskId, setTaskId] = useState<string>('')
+//     const [title, setTitle] = useState<string>('')
+//
+//     const handleTodoIdChange = (e: ChangeEvent<HTMLInputElement>) => {
+//         setTodoId(e.currentTarget.value)
+//     }
+//     const handleTaskIdChange = (e: ChangeEvent<HTMLInputElement>) => {
+//         setTaskId(e.currentTarget.value)
+//     }
+//     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+//         setTitle(e.currentTarget.value)
+//     }
+//     // const updateTaskHandler = async () => {
+//     //     const res = await tasksAPI.upDateTaskTitle(todoId, taskId, title)
+//     //     setState(res.data)
+//     //     setTodoId('')
+//     //     setTaskId('')
+//     //     setTitle('')
+//     // }
+//
+//     return <>
+//         <input onChange={handleTodoIdChange} style={{marginRight: '10px'}} value={todoId} placeholder={'todoId'}/>
+//         <input onChange={handleTaskIdChange} style={{marginRight: '10px'}} value={taskId} placeholder={'taskId'}/>
+//         <input onChange={handleTitleChange} style={{marginRight: '10px'}} value={title} placeholder={'task title'}/>
+//         {/*<button onClick={updateTaskHandler}>update task</button>*/}
+//         <div>{JSON.stringify(state)}</div>
+//     </>
+// }

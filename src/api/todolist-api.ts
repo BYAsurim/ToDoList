@@ -32,8 +32,8 @@ export const tasksAPI = {
     removeTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    upDateTaskTitle(todolistId: string, taskId: string, title: string) {
-        return instance.put<ResponseType<{ item: TasksType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
+    upDateTask(todolistId: string, taskId: string, model: UpdateDomainTaskModelType) {
+        return instance.put<ResponseType<{ item: TasksType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     }
 }
 
@@ -67,6 +67,15 @@ export type TasksType = {
     deadline: null,
     addedDate: Date
 }
+export type UpdateDomainTaskModelType = {
+    title: string,
+    description: null,
+    status: number,
+    priority: number,
+    deadline: null,
+    startDate: null,
+}
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,

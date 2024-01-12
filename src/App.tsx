@@ -5,16 +5,16 @@ import AddItemForm from "./AddItemForm";
 import {Container, Grid, Paper} from "@mui/material";
 import {BasicAppBar} from "./BasicAppBar";
 import {
-    AddTodoListAC,
+    addTodolistTC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
     fetchTodolists,
-    RemoveTodoListAC
+    removeTodolistTC,
+    updateTodolistTitleTC
 } from "./state/todolists-reducer";
-import {addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskTC} from "./state/task-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "./state/task-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispach} from "./state/store";
-import {TasksType} from "./api/todolist-api";
+import {TaskStatuses, TasksType} from "./api/todolist-api";
 
 
 export type filterType = 'all' | 'active' | 'completed'
@@ -39,30 +39,35 @@ export function App() {
 
     const deleteTask = useCallback((todolistId: string, taskId: string) => {
         dispatch(removeTaskTC(taskId, todolistId))
-    }, [dispatch])
+    }, [])
     const addTask = useCallback((todolistId: string, title: string) => {
         dispatch(addTaskTC(todolistId, title))
-    }, [dispatch])
-    const changeTaskStatus = useCallback((todolistId: string, taskId: string, isDone: boolean) => {
-        dispatch(changeTaskStatusAC(taskId, isDone, todolistId))
-    }, [dispatch])
+    }, [])
+    const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
+        // dispatch(changeTaskStatusAC(taskId, isDone, todolistId))
+        dispatch(updateTaskTC(todolistId, taskId, {status}))
+    }, [])
     const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC(title, todolistId, taskId))
-    }, [dispatch])
+        // dispatch(changeTaskTitleAC(title, todolistId, taskId))
+        dispatch(updateTaskTC(todolistId, taskId, {title}))
+    }, [])
     const removeTodoList = useCallback((todolistId: string) => {
-        dispatch(RemoveTodoListAC(todolistId))
-    }, [dispatch])
+        // dispatch(RemoveTodoListAC(todolistId))
+        dispatch(removeTodolistTC(todolistId))
+    }, [])
     const addTodoList = useCallback((newTitle: string) => {
-        const action = AddTodoListAC(newTitle)
-        dispatch(action)
-    }, [dispatch])
+        dispatch(addTodolistTC(newTitle))
+        // const action = AddTodoListAC(newTitle)
+        // dispatch(action)
+    }, [])
     const changeTodoListTitle = useCallback((todolistId: string, title: string) => {
         // setTodolists(todolists.map(el => el.id === todolistId ? {...el, title} : el))
-        dispatch(ChangeTodoListTitleAC(todolistId, title))
-    }, [dispatch])
+        // dispatch(ChangeTodoListTitleAC(todolistId, title))
+        dispatch(updateTodolistTitleTC(todolistId, title))
+    }, [])
     const changeFilter = useCallback((value: filterType, todolistId: string) => {
         dispatch(ChangeTodoListFilterAC(todolistId, value))
-    }, [dispatch])
+    }, [])
     return (
         <div className="App">
             <BasicAppBar/>
@@ -80,8 +85,6 @@ export function App() {
                             return <Grid item key={todolist.id}>
                                 <Paper style={{padding: '10px'}}>
                                     <Todolist
-                                        // id={todolist.id}
-                                        // title={todolist.title}
                                         todolist={todolist}
                                         tasks={tasksForTodolist}
                                         deleteTask={deleteTask}
@@ -90,7 +93,6 @@ export function App() {
                                         changeTaskStatus={changeTaskStatus}
                                         changeTaskTitle={changeTaskTitle}
                                         changeTodoListTitle={changeTodoListTitle}
-                                        // filter={todolist.filter}
                                         removeTodoList={removeTodoList}
                                     />
                                 </Paper>
