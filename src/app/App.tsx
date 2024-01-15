@@ -1,20 +1,22 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
-import AddItemForm from "./AddItemForm";
-import {Container, Grid, Paper} from "@mui/material";
-import {BasicAppBar} from "./BasicAppBar";
+import {Todolist} from "../Todolist";
+import AddItemForm from "../AddItemForm";
+import {Container, Grid, LinearProgress, Paper} from "@mui/material";
+import {BasicAppBar} from "../BasicAppBar";
 import {
     addTodolistTC,
     ChangeTodoListFilterAC,
     fetchTodolists,
     removeTodolistTC,
     updateTodolistTitleTC
-} from "./state/todolists-reducer";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "./state/task-reducer";
+} from "../state/todolists-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "../state/task-reducer";
 import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispach} from "./state/store";
-import {TaskStatuses, TasksType} from "./api/todolist-api";
+import {AppRootStateType, useAppDispach} from "./store";
+import {TaskStatuses, TasksType} from "../api/todolist-api";
+import {RequestStatusType} from "../features/Application/appReducer";
+import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
 
 
 export type filterType = 'all' | 'active' | 'completed'
@@ -35,6 +37,7 @@ export function App() {
 
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, StateTasksType>(state => state.tasks)
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const dispatch = useAppDispach()
 
     const deleteTask = useCallback((todolistId: string, taskId: string) => {
@@ -70,7 +73,9 @@ export function App() {
     }, [])
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <BasicAppBar/>
+            {status === 'loading' && <LinearProgress/>}
             <Container fixed>
                 <Grid container>
                     <Paper style={{padding: '10px', marginTop: '5px'}}>
