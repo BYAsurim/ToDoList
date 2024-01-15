@@ -1,23 +1,25 @@
 import React from 'react'
-import { Provider } from 'react-redux';
-import {AppRootStateType} from '../../state/store';
+import {Provider} from 'react-redux';
+import {AppRootStateType} from '../../app/store';
 import {todolistsReducer} from "../../state/todolists-reducer";
 import {taskReducer} from "../../state/task-reducer";
 import {combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
+import {appReducer, RequestStatusType} from "../../features/Application/appReducer";
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+    app: appReducer
 })
 const todolistId1 = v1()
 const todolistId2 = v1()
 
 const initialGlobalState = {
     todolists: [
-        {id: todolistId1, title: 'What to learn', filter: 'all',order:0, addedDate: new Date()},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order:0, addedDate: new Date() }
-    ] ,
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: new Date()},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: new Date()}
+    ],
     tasks: {
         'todolistId1': [
             {
@@ -75,6 +77,10 @@ const initialGlobalState = {
 
             }
         ]
+    },
+    app: {
+        status: 'loading' as RequestStatusType,
+        error: null as string | null
     }
 };
 
