@@ -1,8 +1,9 @@
-import {StateTasksType} from "../App";
+import {StateTasksType} from "../app/App";
 import {AddTodoListAC, RemoveTodoListAC, SetTodolistsType} from "./todolists-reducer";
 import {Dispatch} from "redux";
 import {tasksAPI, TaskStatuses, TasksType, UpdateDomainTaskModelType} from "../api/todolist-api";
-import {AppRootStateType} from "./store";
+import {AppRootStateType} from "../app/store";
+import {setAppErrorAC, setAppStatusAC} from "../features/Application/appReducer";
 
 type ActionType = ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
@@ -123,23 +124,39 @@ export const updateTaskAC = (todoId: string, taskId: string, model: UpdateTaskMo
 
 //thunk
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     tasksAPI.getTasks(todolistId)
         .then(res => {
             dispatch(setTasksAC(todolistId, res.data.items))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 export const removeTaskTC = (taskId: string, todoId: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppStatusAC('loading'))
         await tasksAPI.removeTask(todoId, taskId)
         dispatch(removeTaskAC(taskId, todoId))
+        dispatch(setAppStatusAC('succeeded'))
     } catch (e) {
 
     }
 }
 export const addTaskTC = (todolistId: string, title: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppStatusAC('loading'))
         const res = await tasksAPI.addTasks(todolistId, title)
-        dispatch(addTaskAC(res.data.data.item))
+        if (res.data.resultCode === 0) {
+            dispatch(addTaskAC(res.data.data.item))
+            dispatch(setAppStatusAC('succeeded'))
+        } else {
+            if (res.data.messages.length) {
+                dispatch(setAppErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(setAppErrorAC('Some error occurred'))
+            }
+            dispatch(setAppStatusAC('failed'))
+        }
+
     } catch (e) {
 
     }

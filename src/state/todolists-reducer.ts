@@ -1,6 +1,7 @@
-import {filterType} from "../App";
+import {filterType} from "../app/App";
 import {todolistAPI, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
+import {setAppErrorAC, setAppStatusAC} from "../features/Application/appReducer";
 
 type ActionType = ReturnType<typeof RemoveTodoListAC> |
     ReturnType<typeof AddTodoListAC> |
@@ -63,22 +64,41 @@ export const ChangeTodoListFilterAC = (id: string, filter: filterType) => ({
 } as const)
 
 export const fetchTodolists = () => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     todolistAPI.getTodolists()
-        .then(res => dispatch(SetTodolistsAC(res.data)))
+        .then(res => {
+            dispatch(SetTodolistsAC(res.data))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+
 
 }
 export const addTodolistTC = (title: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppStatusAC('loading'))
         const res = await todolistAPI.addTodolist(title)
-        dispatch(AddTodoListAC(res.data.data.item))
+        if(res.data.resultCode === 0){
+            dispatch(AddTodoListAC(res.data.data.item))
+            dispatch(setAppStatusAC('succeeded'))
+        }else {
+            if (res.data.messages.length) {
+                dispatch(setAppErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(setAppErrorAC('Some error occurred'))
+            }
+            dispatch(setAppStatusAC('failed'))
+        }
+
     } catch (e) {
 
     }
 }
 export const removeTodolistTC = (todolistID: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppStatusAC('loading'))
         await todolistAPI.removeTodolist(todolistID)
         dispatch(RemoveTodoListAC(todolistID))
+        dispatch(setAppStatusAC('succeeded'))
 
     } catch (e) {
 
@@ -86,9 +106,10 @@ export const removeTodolistTC = (todolistID: string) => async (dispatch: Dispatc
 }
 export const updateTodolistTitleTC = (todolistID: string, title: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppStatusAC('loading'))
         await todolistAPI.upDateTodolistTitle(todolistID, title)
         dispatch(ChangeTodoListTitleAC(todolistID, title))
-
+        dispatch(setAppStatusAC('succeeded'))
     } catch (e) {
 
     }

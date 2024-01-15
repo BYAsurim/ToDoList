@@ -4,10 +4,10 @@ import AddItemForm from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {filterType, TodolistsType} from "./App";
+import {filterType, TodolistsType} from "./app/App";
 import {Task} from "./Task";
 import {fetchTasksTC} from "./state/task-reducer";
-import {useAppDispach} from "./state/store";
+import {useAppDispach} from "./app/store";
 import {TaskStatuses, TasksType} from "./api/todolist-api";
 
 type PropsType = {
