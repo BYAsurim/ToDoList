@@ -8,7 +8,7 @@ import {
     addTodolistTC,
     ChangeTodoListFilterAC,
     fetchTodolists,
-    removeTodolistTC,
+    removeTodolistTC, TodolistDomainType,
     updateTodolistTitleTC
 } from "../state/todolists-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../state/task-reducer";
@@ -20,11 +20,7 @@ import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
 
 
 export type filterType = 'all' | 'active' | 'completed'
-export type TodolistsType = {
-    id: string
-    title: string
-    filter: filterType
-}
+
 export type StateTasksType = {
     [key: string]: Array<TasksType>
 }
@@ -35,7 +31,7 @@ export function App() {
         dispatch(fetchTodolists())
     }, [])
 
-    const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, StateTasksType>(state => state.tasks)
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const dispatch = useAppDispach()

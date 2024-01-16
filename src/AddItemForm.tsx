@@ -4,6 +4,7 @@ import {AddBox} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
     addTaskHandler: (newTaskTitle: string) => void
+    disabled?: boolean
 }
 const AddItemForm = memo((props: AddItemFormPropsType) => {
     console.log('AddItemForm')
@@ -42,6 +43,7 @@ const AddItemForm = memo((props: AddItemFormPropsType) => {
                 {/*       className={error ? s.errorInput : ''}*/}
                 {/*/>*/}
                 <TextField
+                    disabled={props.disabled}
                     variant={'outlined'}
                     value={newTaskTitle} onChange={onChangeHandler}
                     onKeyPress={onKeyPressEnter}
@@ -52,6 +54,7 @@ const AddItemForm = memo((props: AddItemFormPropsType) => {
                 {/*<Button className={s.button} variant={"contained"} color={'primary'} onClick={addTaskHandler}>+</Button>*/}
                 <IconButton
                     onClick={addTaskHandler}
+                    disabled={props.disabled}
                     color={'primary'}>
                     <AddBox/>
                 </IconButton>

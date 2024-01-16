@@ -4,14 +4,15 @@ import AddItemForm from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {filterType, TodolistsType} from "./app/App";
+import {filterType} from "./app/App";
 import {Task} from "./Task";
 import {fetchTasksTC} from "./state/task-reducer";
 import {useAppDispach} from "./app/store";
 import {TaskStatuses, TasksType} from "./api/todolist-api";
+import {TodolistDomainType} from "./state/todolists-reducer";
 
 type PropsType = {
-    todolist:TodolistsType
+    todolist: TodolistDomainType
     tasks: Array<TasksType>
     deleteTask: (todolistId: string, taskId: string) => void
     changeFilter: (value: filterType, todolistId: string) => void
@@ -27,33 +28,33 @@ export const Todolist = memo((props: PropsType) => {
     const dispatch = useAppDispach()
 
     useEffect(() => {
-       dispatch(fetchTasksTC(props.todolist.id))
+        dispatch(fetchTasksTC(props.todolist.id))
     }, []);
 
-    const allClickHandler = useCallback (() => {
-       props.changeFilter('all', props.todolist.id)
-    },[props.changeFilter, props.todolist.id])
-    const activeClickHandler = useCallback (() => {
+    const allClickHandler = useCallback(() => {
+        props.changeFilter('all', props.todolist.id)
+    }, [props.changeFilter, props.todolist.id])
+    const activeClickHandler = useCallback(() => {
         props.changeFilter('active', props.todolist.id)
-    },[props.changeFilter, props.todolist.id])
-    const completedClickHandler = useCallback (() => {
+    }, [props.changeFilter, props.todolist.id])
+    const completedClickHandler = useCallback(() => {
         props.changeFilter('completed', props.todolist.id)
-    },[props.changeFilter, props.todolist.id])
+    }, [props.changeFilter, props.todolist.id])
 
     const addTaskHandler = useCallback((newTaskTitle: string) => {
         props.addTask(props.todolist.id, newTaskTitle)
-    },[props.addTask, props.todolist.id])
+    }, [props.addTask, props.todolist.id])
 
     const removeTodoListHandler = () => {
         props.removeTodoList(props.todolist.id)
     }
 
-    const changeTodoListTitle = useCallback ((title: string) => {
+    const changeTodoListTitle = useCallback((title: string) => {
         props.changeTodoListTitle(props.todolist.id, title)
-    },[props.changeTodoListTitle, props.todolist.id])
+    }, [props.changeTodoListTitle, props.todolist.id])
+    const disabled = props.todolist.entityStatus === 'loading'
 
-
-   let filteredTasks = props.tasks
+    let filteredTasks = props.tasks
     if (props.todolist.filter === 'active') {
         filteredTasks = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
@@ -66,21 +67,22 @@ export const Todolist = memo((props: PropsType) => {
             <div>
                 <div className={s.todoTitle}>
                     <h3><EditableSpan title={props.todolist.title} onClick={changeTodoListTitle}/></h3>
-                    <IconButton onClick={removeTodoListHandler}>
+                    <IconButton onClick={removeTodoListHandler} disabled={disabled}>
                         <Delete/>
                     </IconButton>
                 </div>
                 <div>
-                    <AddItemForm addTaskHandler={addTaskHandler}/>
+                    <AddItemForm addTaskHandler={addTaskHandler} disabled={disabled}/>
                 </div>
                 <div>
                     {
 
-                        filteredTasks.map(task=> {
+                        filteredTasks.map(task => {
                                 return <Task
                                     key={task.id}
-                                    task = {task}
+                                    task={task}
                                     todolistId={props.todolist.id}
+                                    disabled={disabled}
                                     deleteTask={props.deleteTask}
                                     changeTaskStatus={props.changeTaskStatus}
                                     changeTaskTitle={props.changeTaskTitle}
