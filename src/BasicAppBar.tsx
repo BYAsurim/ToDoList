@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import {NavLink} from "react-router-dom";
 
 
 export const BasicAppBar = () => {
@@ -23,9 +24,13 @@ export const BasicAppBar = () => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Todolist
+                        <NavLink to={'/'} style={{textDecoration: 'none', color: '#fff'}}>Todolist</NavLink>
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="secondary">
+                        <NavLink to={'/login'} style={{textDecoration: 'none', color: '#fff'}}>
+                            Login
+                        </NavLink>
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Box>
