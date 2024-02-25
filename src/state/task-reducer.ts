@@ -1,11 +1,11 @@
-import {StateTasksType} from "../app/App";
+import {StateTasksType} from "app/App";
 import {AddTodoListAC, RemoveTodoListAC, SetTodolistsType} from "./todolists-reducer";
 import {Dispatch} from "redux";
-import {tasksAPI, TaskStatuses, TasksType, UpdateDomainTaskModelType} from "../api/todolist-api";
-import {AppRootStateType} from "../app/store";
-import {setAppStatusAC} from "../features/Application/appReducer";
-import {handleServerAppError} from "../common/utils/handleServerAppError";
-import {handleServerNetworkError} from "../common/utils/handleServerNetworkError";
+import {tasksAPI, TaskStatuses, TasksType, UpdateDomainTaskModelType} from "api/todolist-api";
+import {AppRootStateType} from "app/store";
+import {setAppStatusAC} from "app/appReducer";
+import {handleServerAppError} from "common/utils/handleServerAppError";
+import {handleServerNetworkError} from "common/utils/handleServerNetworkError";
 
 type ActionType = ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
@@ -158,7 +158,6 @@ export const addTaskTC = (todolistId: string, title: string) => async (dispatch:
             handleServerAppError(res.data, dispatch)
             dispatch(setAppStatusAC('failed'))
         }
-
     } catch (e) {
         dispatch(setAppStatusAC('failed'))
         handleServerNetworkError(e, dispatch)

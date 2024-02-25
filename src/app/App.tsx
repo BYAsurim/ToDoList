@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {Container, LinearProgress} from "@mui/material";
-import {BasicAppBar} from "../BasicAppBar";
-import {fetchTodolists} from "../state/todolists-reducer";
+import {BasicAppBar} from "BasicAppBar";
+import {fetchTodolists} from "state/todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispach} from "./store";
-import {TasksType} from "../api/todolist-api";
-import {RequestStatusType} from "../features/Application/appReducer";
-import {ErrorSnackbar} from "../components/errorSnackbar/ErrorSnackbar";
+import {TasksType} from "api/todolist-api";
+import {RequestStatusType} from "app/appReducer";
+import {ErrorSnackbar} from "components/errorSnackbar/ErrorSnackbar";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "../features/auth/Login";
-import {TodolistList} from "../features/todolistList/TodolistList";
+import {Login} from "features/auth/Login";
+import {TodolistList} from "features/todolistList/TodolistList";
 
 
 export type filterType = 'all' | 'active' | 'completed'

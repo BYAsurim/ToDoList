@@ -1,9 +1,9 @@
-import {filterType} from "../app/App";
-import {todolistAPI, TodolistType} from "../api/todolist-api";
+import {filterType} from "app/App";
+import {todolistAPI, TodolistType} from "api/todolist-api";
 import {Dispatch} from "redux";
-import {RequestStatusType, setAppStatusAC} from "../features/Application/appReducer";
-import {handleServerAppError} from "../common/utils/handleServerAppError";
-import {handleServerNetworkError} from "../common/utils/handleServerNetworkError";
+import {RequestStatusType, setAppStatusAC} from "app/appReducer";
+import {handleServerAppError} from "common/utils/handleServerAppError";
+import {handleServerNetworkError} from "common/utils/handleServerNetworkError";
 
 type ActionType = ReturnType<typeof RemoveTodoListAC> |
     ReturnType<typeof AddTodoListAC> |

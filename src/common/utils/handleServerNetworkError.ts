@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import axios from "axios";
-import {setAppErrorAC} from "../../features/Application/appReducer";
+import {setAppErrorAC} from "app/appReducer";
 
 export const handleServerNetworkError = (err: unknown, dispatch: Dispatch): void => {
     let errorMessage = "Some error occurred";
