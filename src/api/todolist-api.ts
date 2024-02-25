@@ -1,4 +1,7 @@
 import axios from 'axios'
+import {LoginDataType} from "features/auth/Login";
+
+
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -34,6 +37,12 @@ export const tasksAPI = {
     },
     upDateTask(todolistId: string, taskId: string, model: UpdateDomainTaskModelType) {
         return instance.put<ResponseType<{ item: TasksType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    }
+}
+
+export const authAPI = {
+    login(data: LoginDataType) {
+        return instance.post(`auth/login` , data)
     }
 }
 

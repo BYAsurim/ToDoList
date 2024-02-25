@@ -8,8 +8,13 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {useAppDispach, useAppSelector} from "app/store";
+import {loginTC} from "features/auth/auth-reducer";
+import {Navigate} from "react-router-dom";
 
 export const Login = () => {
+    const dispatch = useAppDispach()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -17,7 +22,7 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
             formik.resetForm()
         },
         validate: (values) => {
@@ -34,8 +39,11 @@ export const Login = () => {
             }
             return errors
         }
-
     })
+
+    if (isLoggedIn) {
+      return  <Navigate to={'/'}/>
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
@@ -65,9 +73,9 @@ export const Login = () => {
                         }
                         <TextField type="password" label="Password"
                                    margin="normal"
-                                   // name={'password'}
-                                   // onChange={formik.handleChange}
-                                   // value={formik.values.password}
+                            // name={'password'}
+                            // onChange={formik.handleChange}
+                            // value={formik.values.password}
                                    {...formik.getFieldProps('password')}
                         />
                         {
@@ -95,4 +103,10 @@ type FormikErrorType = {
     email?: string
     password?: string
     rememberMe?: boolean
+}
+
+export type LoginDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
 }

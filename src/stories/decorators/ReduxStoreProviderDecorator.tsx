@@ -1,16 +1,18 @@
 import React from 'react'
 import {Provider} from 'react-redux';
-import {AppRootStateType} from '../../app/store';
-import {todolistsReducer} from "../../state/todolists-reducer";
-import {taskReducer} from "../../state/task-reducer";
+import {AppRootStateType} from 'app/store';
+import {todolistsReducer} from "state/todolists-reducer";
+import {taskReducer} from "state/task-reducer";
 import {combineReducers, legacy_createStore} from "redux";
 import {v1} from "uuid";
-import {appReducer, RequestStatusType} from "../../features/Application/appReducer";
+import {appReducer, RequestStatusType} from "app/appReducer";
+import {authReducer} from "features/auth/auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 const todolistId1 = v1()
 const todolistId2 = v1()
@@ -81,6 +83,9 @@ const initialGlobalState = {
     app: {
         status: 'loading' as RequestStatusType,
         error: null as string | null
+    },
+    auth:{
+        isLoggedIn: false
     }
 };
 
