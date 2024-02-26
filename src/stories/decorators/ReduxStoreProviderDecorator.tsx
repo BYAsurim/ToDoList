@@ -82,9 +82,10 @@ const initialGlobalState = {
     },
     app: {
         status: 'loading' as RequestStatusType,
-        error: null as string | null
+        error: null as string | null,
+        isInitialized: false
     },
-    auth:{
+    auth: {
         isLoggedIn: false
     }
 };
