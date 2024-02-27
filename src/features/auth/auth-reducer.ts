@@ -32,14 +32,12 @@ export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true))
             dispatch(setAppStatusAC('succeeded'))
-        } else {
-            handleServerAppError(res.data, dispatch)
-            dispatch(setAppStatusAC('failed'))
         }
     } catch (e) {
         handleServerNetworkError(e as { message: string }, dispatch)
     } finally {
         dispatch(setIsInitializedAC(true))
+        dispatch(setAppStatusAC('idle'))
     }
 }
 export const loginTC = (data: LoginDataType) => async (dispatch: Dispatch<ActionsType>) => {
@@ -50,8 +48,8 @@ export const loginTC = (data: LoginDataType) => async (dispatch: Dispatch<Action
             dispatch(setIsLoggedInAC(true))
             dispatch(setAppStatusAC('succeeded'))
         } else {
+            // const showMessage = !res.data.fieldsErrors?.length
             handleServerAppError(res.data, dispatch)
-            dispatch(setAppStatusAC('failed'))
         }
 
     } catch (e) {
@@ -68,7 +66,6 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
             dispatch(setAppStatusAC('succeeded'))
         } else {
             handleServerAppError(res.data, dispatch)
-            dispatch(setAppStatusAC('failed'))
         }
     } catch (e) {
         handleServerNetworkError(e as { message: string }, dispatch)
