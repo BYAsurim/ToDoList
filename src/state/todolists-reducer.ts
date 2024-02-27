@@ -10,6 +10,7 @@ type ActionType = ReturnType<typeof RemoveTodoListAC> |
     ReturnType<typeof ChangeTodoListTitleAC> |
     ReturnType<typeof ChangeTodoListFilterAC> |
     ReturnType<typeof ChangeTodoListStatusAC> |
+    ReturnType<typeof ClearTodolistsDataAC> |
     SetTodolistsType
 
 export type SetTodolistsType = ReturnType<typeof SetTodolistsAC>
@@ -44,7 +45,8 @@ export const todolistsReducer = (state = initialState, action: ActionType): Todo
             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         case 'CHANGE-TODOLIST-ENTITY-STATUS':
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
-
+        case 'CLEAR-TODOLISTS-DATA':
+            return []
         default:
             return state
     }
@@ -73,6 +75,7 @@ export const ChangeTodoListFilterAC = (id: string, filter: filterType) => ({
     id,
     filter
 } as const)
+export const ClearTodolistsDataAC = () => ({type: 'CLEAR-TODOLISTS-DATA'} as const)
 
 export const fetchTodolists = () => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))

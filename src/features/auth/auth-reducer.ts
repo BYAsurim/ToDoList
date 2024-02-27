@@ -4,6 +4,7 @@ import {LoginDataType} from "features/auth/Login";
 import {authAPI} from "api/todolist-api";
 import {handleServerAppError} from "common/utils/handleServerAppError";
 import {handleServerNetworkError} from "common/utils/handleServerNetworkError";
+import {ClearTodolistsDataAC} from "state/todolists-reducer";
 
 
 const initialState = {
@@ -63,6 +64,7 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         const res = await authAPI.logout()
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(false))
+            dispatch(ClearTodolistsDataAC())
             dispatch(setAppStatusAC('succeeded'))
         } else {
             handleServerAppError(res.data, dispatch)
@@ -79,3 +81,4 @@ type ActionsType = ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setAppErrorAC>
     | ReturnType<typeof setIsInitializedAC>
+    | ReturnType<typeof ClearTodolistsDataAC>
