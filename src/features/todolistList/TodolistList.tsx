@@ -1,9 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
 import {Container, Grid, Paper} from "@mui/material";
 import AddItemForm from "../../AddItemForm";
-import {Todolist} from "Todolist";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "state/task-reducer";
-import {TaskStatuses} from "api/todolist-api";
+import {Todolist} from "features/todolistList/todolist/Todolist";
+import {addTaskTC} from "state/task-reducer";
 import {
     addTodolistTC,
     ChangeTodoListFilterAC,
@@ -29,17 +28,9 @@ export const TodolistList = () => {
         dispatch(fetchTodolists())
     }, [])
 
-    const deleteTask = useCallback((todolistId: string, taskId: string) => {
-        dispatch(removeTaskTC(taskId, todolistId))
-    }, [])
+
     const addTask = useCallback((todolistId: string, title: string) => {
         dispatch(addTaskTC(todolistId, title))
-    }, [])
-    const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-        dispatch(updateTaskTC(todolistId, taskId, {status}))
-    }, [])
-    const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-        dispatch(updateTaskTC(todolistId, taskId, {title}))
     }, [])
     const removeTodoList = useCallback((todolistId: string) => {
         dispatch(removeTodolistTC(todolistId))
@@ -78,11 +69,8 @@ export const TodolistList = () => {
                                     <Todolist
                                         todolist={todolist}
                                         tasks={tasksForTodolist}
-                                        deleteTask={deleteTask}
                                         changeFilter={changeFilter}
                                         addTask={addTask}
-                                        changeTaskStatus={changeTaskStatus}
-                                        changeTaskTitle={changeTaskTitle}
                                         changeTodoListTitle={changeTodoListTitle}
                                         removeTodoList={removeTodoList}
                                     />

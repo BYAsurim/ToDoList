@@ -7,8 +7,6 @@ type AddItemFormPropsType = {
     disabled?: boolean
 }
 const AddItemForm = memo((props: AddItemFormPropsType) => {
-    console.log('AddItemForm')
-
     const [newTaskTitle, setNewTastTitle] = useState('')
     const [error, setError] = useState('')
 

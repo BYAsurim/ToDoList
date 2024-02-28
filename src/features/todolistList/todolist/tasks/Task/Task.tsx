@@ -1,39 +1,39 @@
 import React, {ChangeEvent, useCallback} from 'react';
-import s from "./Todolist.module.css";
+import s from "./task.module.css";
 import {Checkbox, IconButton} from "@mui/material";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskStatuses, TasksType} from "./api/todolist-api";
+import {TaskStatuses, TasksType} from "api/todolist-api";
+import {useAppDispach} from "app/store";
+import {removeTaskTC, updateTaskTC} from "state/task-reducer";
 
 
 type TaskPropsType = {
     task: TasksType
-    deleteTask: (todolistId: string, taskId: string) => void
     todolistId: string
     disabled: boolean
-    changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
-    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
 }
 
 export const Task: React.FC<TaskPropsType> = ({
                                                   task,
-                                                  deleteTask,
                                                   todolistId,
                                                   disabled,
-                                                  changeTaskStatus,
-                                                  changeTaskTitle
+
                                               }) => {
 
-    const deleteTasksClickHandler = () => {
-        deleteTask(todolistId, task.id)
+    const dispatch = useAppDispach()
+
+
+    const deleteTasksHandler = () => {
+        dispatch(removeTaskTC(task.id, todolistId))
     }
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const newStatus = e.currentTarget.checked
-        changeTaskStatus(todolistId, task.id, newStatus ? TaskStatuses.Completed : TaskStatuses.New)
+        const status = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
+        dispatch(updateTaskTC(todolistId, task.id, {status}))
     }
     const changeTaskTitleHandler = useCallback((title: string) => {
-        changeTaskTitle(todolistId, task.id, title)
-    }, [todolistId, changeTaskTitle, task.id])
+        dispatch(updateTaskTC(todolistId, task.id, {title}))
+    }, [todolistId, task.id])
 
     return (
         <div className={task.status ? s.isDone : ''}>
@@ -44,7 +44,7 @@ export const Task: React.FC<TaskPropsType> = ({
                 onChange={changeTaskStatusHandler}
             />
             <EditableSpan title={task.title} onClick={changeTaskTitleHandler}/>
-            <IconButton onClick={deleteTasksClickHandler} disabled={disabled}>
+            <IconButton onClick={deleteTasksHandler} disabled={disabled}>
                 <Delete/>
             </IconButton>
         </div>)
