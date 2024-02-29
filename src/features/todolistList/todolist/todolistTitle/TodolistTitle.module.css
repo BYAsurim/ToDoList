@@ -1,0 +1,7 @@
+.todoTitle{
+    display: flex;
+}
+.todoTitle button{
+    height: 20px;
+    margin-top: 20px;
+}
