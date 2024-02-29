@@ -2,15 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {Container, Grid, Paper} from "@mui/material";
 import AddItemForm from "../../AddItemForm";
 import {Todolist} from "features/todolistList/todolist/Todolist";
-import {addTaskTC} from "state/task-reducer";
-import {
-    addTodolistTC,
-    ChangeTodoListFilterAC,
-    fetchTodolists,
-    removeTodolistTC,
-    updateTodolistTitleTC
-} from "state/todolists-reducer";
-import {filterType} from "app/App";
+import {addTodolistTC, fetchTodolists} from "state/todolists-reducer";
 import {useAppDispach, useAppSelector} from "app/store";
 import {Navigate} from "react-router-dom";
 
@@ -29,27 +21,15 @@ export const TodolistList = () => {
     }, [])
 
 
-    const addTask = useCallback((todolistId: string, title: string) => {
-        dispatch(addTaskTC(todolistId, title))
-    }, [])
-    const removeTodoList = useCallback((todolistId: string) => {
-        dispatch(removeTodolistTC(todolistId))
-    }, [])
+
     const addTodoList = useCallback((newTitle: string) => {
         dispatch(addTodolistTC(newTitle))
-    }, [])
-    const changeTodoListTitle = useCallback((todolistId: string, title: string) => {
-        dispatch(updateTodolistTitleTC(todolistId, title))
-    }, [])
-    const changeFilter = useCallback((value: filterType, todolistId: string) => {
-        dispatch(ChangeTodoListFilterAC(todolistId, value))
     }, [])
 
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
-
 
     return (
         <>
@@ -69,10 +49,6 @@ export const TodolistList = () => {
                                     <Todolist
                                         todolist={todolist}
                                         tasks={tasksForTodolist}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
-                                        changeTodoListTitle={changeTodoListTitle}
-                                        removeTodoList={removeTodoList}
                                     />
                                 </Paper>
                             </Grid>

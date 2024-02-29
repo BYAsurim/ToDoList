@@ -36,10 +36,6 @@ const AddItemForm = memo((props: AddItemFormPropsType) => {
     return (
         <div>
             <div>
-                {/*<input value={newTaskTitle} onChange={onChangeHandler}*/}
-                {/*       onKeyPress={onKeyPressEnter}*/}
-                {/*       className={error ? s.errorInput : ''}*/}
-                {/*/>*/}
                 <TextField
                     disabled={props.disabled}
                     variant={'outlined'}
@@ -48,17 +44,12 @@ const AddItemForm = memo((props: AddItemFormPropsType) => {
                     label={'Write title'}
                     error={!!error}
                 />
-                {/*<button onClick={addTaskHandler}>+</button>*/}
-                {/*<Button className={s.button} variant={"contained"} color={'primary'} onClick={addTaskHandler}>+</Button>*/}
                 <IconButton
                     onClick={addTaskHandler}
                     disabled={props.disabled}
                     color={'primary'}>
                     <AddBox/>
                 </IconButton>
-                {/*{error &&*/}
-                {/*    <div className={s.error}>error</div>*/}
-                {/*}*/}
             </div>
         </div>
     );
