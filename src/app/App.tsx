@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {CircularProgress, Container, LinearProgress} from "@mui/material";
-import {BasicAppBar} from "BasicAppBar";
+import {BasicAppBar} from "components/basicAppBar/BasicAppBar";
 import {useAppDispach, useAppSelector} from "./store";
-import {TasksType} from "api/todolist-api";
 import {ErrorSnackbar} from "components/errorSnackbar/ErrorSnackbar";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "features/auth/Login";
-import {TodolistList} from "features/todolistList/TodolistList";
-import {meTC} from "features/auth/auth-reducer";
+import {Login} from "features/auth/ui/Login";
+import {TodolistList} from "features/todolistList/ui/TodolistList";
+import {meTC} from "features/auth/model/auth-reducer";
+import { TasksType } from 'features/todolistList/api/tasks/tasksApi';
 
 
 export type filterType = 'all' | 'active' | 'completed'

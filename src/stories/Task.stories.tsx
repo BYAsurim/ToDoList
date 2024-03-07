@@ -1,11 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {Task} from 'features/todolistList/todolist/tasks/Task/Task';
+import {Task} from 'features/todolistList/ui/todolist/tasks/task/Task';
 
 // More on how to set up stories at:
 // https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof Task> = {
-    title: 'TODOLISTS/Task',
+    title: 'TODOLISTS/task',
     component: Task,
     // This component will have an automatically generated Autodocs entry:
     // https://storybook.js.org/docs/react/writing-docs/autodocs

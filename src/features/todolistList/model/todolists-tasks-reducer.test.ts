@@ -1,28 +1,31 @@
-import React from 'react'
-import {Provider} from 'react-redux';
-import {AppRootStateType} from 'app/store';
-import {todolistsReducer} from "features/todolistList/model/todolists/todolists-reducer";
-import {taskReducer} from "features/todolistList/model/tasks/task-reducer";
-import {combineReducers, legacy_createStore} from "redux";
-import {v1} from "uuid";
-import {appReducer, RequestStatusType} from "app/appReducer";
-import {authReducer} from "features/auth/model/auth-reducer";
+import {AddTodoListAC, RemoveTodoListAC, TodolistDomainType, todolistsReducer} from "./todolists/todolists-reducer";
+import {taskReducer} from "./tasks/task-reducer";
+import {StateTasksType} from "../../../app/App";
 
-const rootReducer = combineReducers({
-    tasks: taskReducer,
-    todolists: todolistsReducer,
-    app: appReducer,
-    auth: authReducer
+test('ids should be equals', () => {
+    const startTasksState: StateTasksType = {}
+    const startTodolistsState: Array<TodolistDomainType> = []
+    const newTodoList = {
+        id: 'todolistId3',
+        title: 'title',
+        filter: 'all',
+        order: 0,
+        addedDate: new Date()
+    }
+    const action = AddTodoListAC(newTodoList)
+
+    const endTasksState = taskReducer(startTasksState, action)
+    const endTodolistsState = todolistsReducer(startTodolistsState, action)
+
+    const keys = Object.keys(endTasksState)
+    const idFromTasks = keys[0]
+    const idFromTodolists = endTodolistsState[0].id
+
+    expect(idFromTasks).toBe(action.todolist.id)
+    expect(idFromTodolists).toBe(action.todolist.id)
 })
-const todolistId1 = v1()
-const todolistId2 = v1()
-
-const initialGlobalState = {
-    todolists: [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, entityStatus: "idle", addedDate: new Date()},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, entityStatus: "idle", addedDate: new Date()}
-    ],
-    tasks: {
+test('property with todolistId should be deleted', () => {
+    const startState: StateTasksType = {
         'todolistId1': [
             {
                 id: '1',
@@ -79,20 +82,15 @@ const initialGlobalState = {
 
             }
         ]
-    },
-    app: {
-        status: 'loading' as RequestStatusType,
-        error: null as string | null,
-        isInitialized: false
-    },
-    auth: {
-        isLoggedIn: false
     }
-};
 
-export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootStateType);
+    const action = RemoveTodoListAC('todolistId2')
+
+    const endState = taskReducer(startState, action)
 
 
-export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
-    return <Provider store={storyBookStore}>{storyFn()}</Provider>
-}
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(1)
+    expect(endState['todolistId2']).not.toBeDefined()
+})
